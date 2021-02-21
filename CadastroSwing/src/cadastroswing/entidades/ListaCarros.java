@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaCarros {
-   List<Carro> lista = new ArrayList<>();
+   private List<Carro> lista = new ArrayList<>();
    
    public void adiciona(Carro carro){
        lista.add(carro);
@@ -20,4 +20,10 @@ public class ListaCarros {
            System.out.println(c.toString());
        }
    }
+
+    public List<Carro> getLista() {
+        return lista;
+    }
+   
+   
 }

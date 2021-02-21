@@ -9,6 +9,8 @@ import cadastroswing.entidades.Carro;
 import cadastroswing.entidades.ListaCarros;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Cadastrocarros extends javax.swing.JFrame {
     }
 
     List<String> listaChevrolet = new ArrayList<>();
+
     private void preencheListaChevrolet() {
         listaChevrolet.removeAll(listaChevrolet);
         listaChevrolet.add("Onix");
@@ -37,6 +40,17 @@ public class Cadastrocarros extends javax.swing.JFrame {
     }
 
     List<String> listaWolks = new ArrayList<>();
+
+    private boolean validaDados() {
+        if (jtPlaca.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Informe a placa");
+            jtPlaca.requestFocus();
+            return false;
+        }
+        //
+
+        return true;
+    }
 
     private void preencheListaWolks() {
         listaWolks.removeAll(listaWolks);
@@ -69,6 +83,8 @@ public class Cadastrocarros extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jtAnoFabricacao = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableCarros = new javax.swing.JTable();
 
         jTextField1.setText("jTextField1");
 
@@ -107,6 +123,31 @@ public class Cadastrocarros extends javax.swing.JFrame {
             }
         });
 
+        jTableCarros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Placa", "Marca", "Modelo", "Ano Fabricação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableCarros);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,44 +155,49 @@ public class Cadastrocarros extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jtAnoFabricacao, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jcMarca, javax.swing.GroupLayout.Alignment.LEADING, 0, 139, Short.MAX_VALUE)
                         .addComponent(jcModelo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addGap(61, 61, 61)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -159,16 +205,27 @@ public class Cadastrocarros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Carro c = new Carro();
-        c.setPlaca(jtPlaca.getText());
-        c.setMarca(jcMarca.getItemAt(jcMarca.getSelectedIndex()));
-        c.setModelo(jcModelo.getItemAt(jcModelo.getSelectedIndex()));
-        c.setAnoFabricacao(Integer.parseInt(jtAnoFabricacao.getText()));
-        listacarros.adiciona(c);
+        if (validaDados()) {
+            Carro c = new Carro();
+            c.setPlaca(jtPlaca.getText());
+            c.setMarca(jcMarca.getItemAt(jcMarca.getSelectedIndex()));
+            c.setModelo(jcModelo.getItemAt(jcModelo.getSelectedIndex()));
+            c.setAnoFabricacao(Integer.parseInt(jtAnoFabricacao.getText()));
+            listacarros.adiciona(c);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        listacarros.listarTodos();
+        DefaultTableModel dtm = (DefaultTableModel) jTableCarros.getModel();
+        dtm.setNumRows(0);
+
+        List<Carro> lista = listacarros.getLista();
+        for (Carro carro : lista) {
+            dtm.addRow(new Object[]{carro.getPlaca(),
+                carro.getMarca(),
+                carro.getModelo(),
+                carro.getAnoFabricacao()});
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jcMarcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcMarcaItemStateChanged
@@ -176,7 +233,6 @@ public class Cadastrocarros extends javax.swing.JFrame {
         int selected = jcMarca.getSelectedIndex();
         switch (selected) {
             case 0: {
-                jcModelo.removeAllItems();
                 preencheListaFord();
                 for (String item : listaFord) {
                     jcModelo.addItem(item);
@@ -184,20 +240,18 @@ public class Cadastrocarros extends javax.swing.JFrame {
                 break;
             }
             case 1: {
-                jcModelo.removeAllItems();
                 preencheListaChevrolet();
                 for (String item : listaChevrolet) {
                     jcModelo.addItem(item);
                 }
                 break;
             }
-            case 2:{
-               jcModelo.removeAllItems();
-               preencheListaWolks();
-               for(String item: listaWolks){
-                  jcModelo.addItem(item);
-                } 
-               break;
+            case 2: {
+                preencheListaWolks();
+                for (String item : listaWolks) {
+                    jcModelo.addItem(item);
+                }
+                break;
             }
             default:
                 jcModelo.addItem("Não existe modelo");
@@ -231,6 +285,8 @@ public class Cadastrocarros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableCarros;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JComboBox<String> jcMarca;
