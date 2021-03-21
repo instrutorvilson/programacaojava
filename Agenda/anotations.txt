@@ -1,0 +1,11 @@
+===========================================
+Criar a tela de cadastro de compromisso,
+vincular ao menu
+criar a classe compromisso
+criar  um objeto compromisso
+
+================
+separar código do botão inserir em:
+->metodo validar
+ criação do objeto
+metodo limpar
