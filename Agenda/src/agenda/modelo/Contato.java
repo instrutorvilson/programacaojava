@@ -5,10 +5,12 @@
  */
 package agenda.modelo;
 
-/**
- *
- * @author vilson.moro
- */
+import utils.ConectaDB;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+
 public class Contato {
     private String nome;
     private String email;
@@ -52,5 +54,24 @@ public class Contato {
         return "Contato{" + "nome=" + nome + ", email=" + email + ", fone=" + fone + '}';
     }
     
+    public boolean salvar(){
+        try {
+            //conectar ao banco
+            Connection con = ConectaDB.getConexao();
+            //montar sql
+            String sql = "insert into contato(nome, fone, email)"
+                    + "values(?,?,?)";
+            //envia sql para o banco de dados
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, this.nome);
+            stm.setString(2, this.fone);
+            stm.setString(3, this.email);
+            stm.execute();            
+        } catch (SQLException ex) {
+            System.out.println("Erro: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
     
 }

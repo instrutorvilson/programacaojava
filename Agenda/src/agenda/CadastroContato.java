@@ -133,8 +133,7 @@ public class CadastroContato extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(rootPane, "informe fone");
           jTfone.requestFocus();
           return false;  
-        }    
-        
+        }            
         
         return true;
     }
@@ -155,9 +154,11 @@ public class CadastroContato extends javax.swing.JFrame {
         String fone = jTfone.getText();
         
         Contato ct = new Contato(nome, email, fone);        
-        ControllerGeral.contatos.add(ct);
-        
-        limpaCampos(); 
+       // ControllerGeral.contatos.add(ct);
+       if(ct.salvar())
+         limpaCampos(); 
+       else
+         JOptionPane.showMessageDialog(rootPane, "Erro ao salvar contato");
        
         
     }//GEN-LAST:event_jButton1ActionPerformed

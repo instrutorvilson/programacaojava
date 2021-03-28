@@ -1,0 +1,63 @@
+/*create table cliente(
+    codcliente int,
+    nome varchar(40),
+    fone varchar(15),
+    email varchar(50)
+);*/
+
+/*criar chave primária*/
+alter table cliente
+add primary key(codcliente);
+
+/*excluir todos os registros de cliente*/
+delete from cliente;
+/*consulta todos os clientes*/
+select * from cliente;
+/*insere um registro na tabela de cliente*/
+insert into cliente (codcliente,nome, fone, email)
+            values (11,'jose','123','jose@gmail.com');
+
+insert into cliente(codcliente)values(15);
+
+alter table cliente
+drop column nome;
+
+alter table cliente
+add column nome varchar(40) not null default 'x';
+
+drop table cliente
+
+create table cliente(
+    codcliente int primary key,
+    nome varchar(40) not null,
+    fone varchar(15),
+    email varchar(50)
+);
+
+insert into cliente(codcliente, nome)values(10, 'Antonio');
+
+create table venda(
+ codvenda serial primary key,
+ data date,
+ clienteId int,
+ status char);
+
+insert into venda(data,clienteId,status)
+values('2021-03-28',10,'A');
+
+delete from venda;
+select * from venda;
+
+alter table venda
+add constraint fk_cliente foreign key(clienteid)
+references cliente(codcliente);
+
+drop table venda;
+
+create table venda(
+ codvenda serial primary key,
+ data date,
+ clienteId int,
+ status char,
+ foreign key(clienteId) references cliente(codcliente)
+);
