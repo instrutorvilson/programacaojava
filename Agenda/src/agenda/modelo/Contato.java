@@ -103,6 +103,21 @@ public class Contato {
         return rs;
     }
     
+    public ResultSet getAll(String filter){
+        ResultSet rs = null;
+        try {
+            String sql = "select * from contato"
+                    + " where nome like '%"+ filter +"%'";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);
+            
+            rs =  stm.executeQuery();
+        } catch (SQLException ex) {
+           System.out.println("Erro: " + ex.getMessage());
+        }
+        return rs;
+    }
+    
     public static Contato getById(int id){
         Contato contato = null;
         try {

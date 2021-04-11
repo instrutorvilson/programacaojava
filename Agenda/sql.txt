@@ -1,0 +1,23 @@
+agregação
+////
+
+create table contato(
+codcontato serial primary key,
+nome varchar(50),
+fone varchar(15),
+email varchar(100)
+)
+
+drop table compromisso
+create table compromisso(
+id serial primary key,
+contatoId int,
+data varchar(10),
+hora varchar(5),
+local varchar(100),
+observacao varchar(500)
+) 
+
+alter table compromisso add constraint fk_contato
+foreign key(contatoId)
+references contato(codcontato)

@@ -155,7 +155,8 @@ public class CadastroCompromisso extends javax.swing.JFrame {
       ResultSet rs = contato.getAll();
         try {
             while(rs.next()){
-                jCcontato.addItem(rs.getString("codcontato") + "-"+ rs.getString("nome"));
+                jCcontato.addItem(rs.getString("codcontato") + "-"
+                        + rs.getString("nome"));
             } 
         } catch (SQLException ex) {
            // 
