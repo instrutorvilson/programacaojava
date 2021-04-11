@@ -9,14 +9,22 @@ import utils.ConectaDB;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Contato {
+    private int id;
     private String nome;
     private String email;
     private String fone;
 
     public Contato() {
+    }
+
+    public Contato(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
     }
 
     public Contato(String nome, String email, String fone) {
@@ -47,7 +55,15 @@ public class Contato {
 
     public void setFone(String fone) {
         this.fone = fone;
-    }       
+    }      
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }    
 
     @Override
     public String toString() {
@@ -73,5 +89,43 @@ public class Contato {
         }
         return true;
     }
+    
+    public ResultSet getAll(){
+        ResultSet rs = null;
+        try {
+            String sql = "select codcontato, nome from contato";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);
+            rs =  stm.executeQuery();
+        } catch (SQLException ex) {
+           System.out.println("Erro: " + ex.getMessage());
+        }
+        return rs;
+    }
+    
+    public static Contato getById(int id){
+        Contato contato = null;
+        try {
+            String sql = "select * from contato " +
+                    "where codcontato = ?";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs =  stm.executeQuery();
+            if(rs.next()){
+                contato = new Contato();
+                contato.setId(rs.getInt("codcontato"));
+                contato.setNome(rs.getString("nome"));
+                contato.setFone(rs.getString("fone"));
+                contato.setEmail(rs.getString("email"));                
+            }
+            
+        } catch (SQLException ex) {
+            //
+        }        
+        return contato;
+    } 
+
+    
     
 }

@@ -8,8 +8,11 @@ package agenda;
 import agenda.modelo.Compromisso;
 import agenda.modelo.Contato;
 import controller.ControllerGeral;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Date;
-import java.util.List;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -143,14 +146,24 @@ public class CadastroCompromisso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       List<Contato> contatos = ControllerGeral.contatos;
+      /* List<Contato> contatos = ControllerGeral.contatos;
         for(Contato ct :contatos){
            jCcontato.addItem(ct.getNome());
+        }
+       */
+      Contato contato = new Contato();
+      ResultSet rs = contato.getAll();
+        try {
+            while(rs.next()){
+                jCcontato.addItem(rs.getString("codcontato") + "-"+ rs.getString("nome"));
+            } 
+        } catch (SQLException ex) {
+           // 
         }
     }//GEN-LAST:event_formWindowOpened
 
     private Contato buscarContato(String nome){
-       for(Contato ct : ControllerGeral.contatos){
+      for(Contato ct : ControllerGeral.contatos){
            if(ct.getNome().equals(nome))
                return ct;
        } 
@@ -159,17 +172,20 @@ public class CadastroCompromisso extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Compromisso cp = new Compromisso();
-        System.out.println();
-        
-        Contato contato = buscarContato(jCcontato.getSelectedItem().toString());
+        int index = jCcontato.getSelectedItem().toString().indexOf("-");
+        String codContato = jCcontato.getSelectedItem().toString().substring(0, index);
+                  
+        Contato contato = Contato.getById(Integer.parseInt(codContato));        
         cp.setContato(contato);
-       // cp.setData(Date.valueOf(jTData.getText()));
-       // cp.setHora(Date.valueOf(jThora.getText()));
+        cp.setData(jTData.getText());
+        cp.setHora(jThora.getText());
         cp.setLocal(jTlocal.getText());
         cp.setObservacao(jTobservacao.getText());
          
-        System.out.println(cp.toString());
-        
+       if(cp.salvar()){
+           JOptionPane.showMessageDialog(rootPane, "Compromisso cadastrado");      
+       }
+       
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
