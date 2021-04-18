@@ -23,13 +23,19 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
         jLDataFim.setVisible(ativa);
         jLDataInicio.setVisible(ativa);
         jTDataFim.setVisible(ativa);
-        jTDataInicio.setVisible(ativa);
-        jTFiltro.setVisible(!ativa);
+        jTDataInicio.setVisible(ativa);        
     }
+    
+    private void ativaNomeLocal(boolean ativa){
+        jTFiltro.setVisible(ativa);
+        jLFiltro.setVisible(ativa);
+    }
+    
   
     public ConsultaCompromissos() {
         initComponents();
         ativaInformeData(false);
+        ativaNomeLocal(false);
     }
 
    
@@ -46,6 +52,7 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
         jLDataFim = new javax.swing.JLabel();
         jTDataFim = new javax.swing.JTextField();
         jTFiltro = new javax.swing.JTextField();
+        jLFiltro = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,11 +112,12 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
                             .addComponent(jLDataInicio))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLDataFim))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1))
@@ -126,7 +134,9 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLDataFim)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLDataFim)
+                                    .addComponent(jLFiltro))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,7 +160,7 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
         try {
             ResultSet rs = null;
             Compromisso cp = new Compromisso();
-            if(jComboBox1.getSelectedIndex() == 1){
+           /* if(jComboBox1.getSelectedIndex() == 1){
                rs = cp.getAll(jTDataInicio.getText(), jTDataFim.getText()); 
             }
             else if(jComboBox1.getSelectedIndex() == 2){
@@ -163,7 +173,17 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
             {
                rs = cp.getAll();
             }               
-            
+            */
+           switch(jComboBox1.getSelectedIndex()){
+               case 1: rs = cp.getAll(jTDataInicio.getText(), jTDataFim.getText()); 
+                       break;
+               case 2: cp.getFilterByName(jTFiltro.getText());
+                       break;
+               case 3: cp.getFilterByLocal(jTFiltro.getText());
+                       break;
+               default:
+                       rs = cp.getAll();
+           }
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             dtm.setNumRows(0);
             while(rs.next()){
@@ -182,6 +202,17 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         ativaInformeData(jComboBox1.getSelectedIndex() == 1);
+        
+        boolean ativa = (jComboBox1.getSelectedIndex() == 2) || (jComboBox1.getSelectedIndex() == 3);
+        ativaNomeLocal(ativa);
+        
+        if(jComboBox1.getSelectedIndex() == 2){
+            jLFiltro.setText("Informe parte do nome"); 
+    
+        }
+        if(jComboBox1.getSelectedIndex() == 3){
+            jLFiltro.setText("Informe parte do local"); 
+        }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
        
@@ -191,6 +222,7 @@ public class ConsultaCompromissos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLDataFim;
     private javax.swing.JLabel jLDataInicio;
+    private javax.swing.JLabel jLFiltro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTDataFim;
     private javax.swing.JTextField jTDataInicio;

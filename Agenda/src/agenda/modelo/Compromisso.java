@@ -33,8 +33,9 @@ public class Compromisso {
                     + " from compromisso c, contato ct"
                     + " where c.idcontato = ct.codcontato "
                    + " and local like '%" + filtro+ "%'";
-            Connection con = ConectaDB.getConexao();
-            PreparedStatement stm = con.prepareStatement(sql);            
+           // Connection con = ConectaDB.getConexao();
+           // PreparedStatement stm = con.prepareStatement(sql);
+            PreparedStatement stm = ConectaDB.getConexao().prepareStatement(sql);
             rs = stm.executeQuery();            
         } catch (SQLException ex) {
            throw new RuntimeException(ex.getMessage());
