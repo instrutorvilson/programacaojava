@@ -25,6 +25,40 @@ public class Compromisso {
     private String local;
     private String observacao;
     
+    public ResultSet getFilterByLocal(String filtro){
+        ResultSet rs = null;
+        try {
+            String sql = "select c.data, c.hora,c.local,"
+                    + " c.observacao, ct.nome"
+                    + " from compromisso c, contato ct"
+                    + " where c.idcontato = ct.codcontato "
+                   + " and local like '%" + filtro+ "%'";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);            
+            rs = stm.executeQuery();            
+        } catch (SQLException ex) {
+           throw new RuntimeException(ex.getMessage());
+        }
+        return rs;
+    }
+    
+    public ResultSet getFilterByName(String filtro){
+        ResultSet rs = null;
+        try {
+            String sql = "select c.data, c.hora,c.local,"
+                    + " c.observacao, ct.nome"
+                    + " from compromisso c, contato ct"
+                    + " where c.idcontato = ct.codcontato "
+                   + " and nome like '%" + filtro+ "%'";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);            
+            rs = stm.executeQuery();            
+        } catch (SQLException ex) {
+           throw new RuntimeException(ex.getMessage());
+        }
+        return rs;
+    }
+    
     public ResultSet getAll(String dataInicio, String dataFim){
         ResultSet rs = null;
         try {
