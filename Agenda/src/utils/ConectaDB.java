@@ -13,7 +13,7 @@ public class ConectaDB {
        Connection con = null;
         String url = "jdbc:postgresql://localhost:5432/aulajava";
         String user = "postgres";
-        String password = "123";
+        String password = "admin";
         try {
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url, user, password);

@@ -6,15 +6,12 @@
 package agenda.modelo;
 
 import java.sql.Connection;
-import java.util.Calendar;
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.Instant;
-import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import utils.ConectaDB;
+import java.sql.ResultSet;
 
 /**
  *
@@ -28,10 +25,44 @@ public class Compromisso {
     private String local;
     private String observacao;
     
+    public ResultSet getAll(String dataInicio, String dataFim){
+        ResultSet rs = null;
+        try {
+            String sql = "select c.data, c.hora,c.local,"
+                    + " c.observacao, ct.nome"
+                    + " from compromisso c, contato ct"
+                    + " where c.idcontato = ct.codcontato "
+                    + " and data between ? and ?";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, dataInicio);
+            stm.setString(2, dataFim);
+            rs = stm.executeQuery();            
+        } catch (SQLException ex) {
+           throw new RuntimeException(ex.getMessage());
+        }
+        return rs;
+    }
+    
+    public ResultSet getAll(){
+        ResultSet rs = null;
+        try {
+            String sql = "select c.data, c.hora,c.local,"
+                    + " c.observacao, ct.nome"
+                    + " from compromisso c, contato ct"
+                    + " where c.idcontato = ct.codcontato";
+            Connection con = ConectaDB.getConexao();
+            PreparedStatement stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();            
+        } catch (SQLException ex) {
+           throw new RuntimeException(ex.getMessage());
+        }
+        return rs;
+    }
     public boolean salvar(){
         try {
             String sql = "insert into compromisso"
-                    +"(contatoId,data, hora, local, observacao)"
+                    +"(idcontato,data, hora, local, observacao)"
                     +"values(?,?,?,?,?)";
             Connection con = ConectaDB.getConexao();
             PreparedStatement stm = con.prepareStatement(sql);

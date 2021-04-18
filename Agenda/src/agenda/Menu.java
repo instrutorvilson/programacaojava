@@ -79,6 +79,11 @@ public class Menu extends javax.swing.JFrame {
         });
 
         jMenuItem3.setText("Compromissos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Contatos");
@@ -126,6 +131,10 @@ public class Menu extends javax.swing.JFrame {
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new ConsultaCompromissos().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
